@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.platzi.android.rickandmorty.R
+import com.platzi.android.rickandmorty.RickAndMortyPlatziApp
 import com.platzi.android.rickandmorty.adapters.CharacterGridAdapter
 import com.platzi.android.rickandmorty.api.APIConstants.BASE_API_URL
 import com.platzi.android.rickandmorty.api.CharacterRequest
@@ -37,9 +40,7 @@ class CharacterListFragment : Fragment() {
         CharacterRequest(BASE_API_URL)
     }
 
-    private val characterListViewModel: CharacterListViewModel by lazy {
-        getViewModel { CharacterListViewModel(characterRequest) }
-    }
+    private lateinit var characterListViewModel: CharacterListViewModel
 
     private val onScrollListener: RecyclerView.OnScrollListener by lazy {
         object: RecyclerView.OnScrollListener() {
@@ -86,6 +87,9 @@ class CharacterListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val appContainer = (requireActivity().application as RickAndMortyPlatziApp).appContainer
+        characterListViewModel = getViewModel { appContainer.characterListViewModelFactory.create() }
 
         characterGridAdapter = CharacterGridAdapter { character ->
             listener.openCharacterDetail(character)

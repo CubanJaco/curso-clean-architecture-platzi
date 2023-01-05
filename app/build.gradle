@@ -88,4 +88,6 @@ dependencies {
     implementation recyclerViewLib
     implementation swipeRefreshLayoutLib
     implementation viewPagerLib
+
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 }
