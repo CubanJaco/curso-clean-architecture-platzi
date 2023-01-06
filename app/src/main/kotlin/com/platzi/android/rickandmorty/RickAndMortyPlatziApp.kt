@@ -2,11 +2,12 @@ package com.platzi.android.rickandmorty
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.platzi.android.rickandmorty.di_test.AppContainer
+import com.platzi.android.rickandmorty.di_test.containers.implementations.AppContainerImpl
+import com.platzi.android.rickandmorty.di_test.containers.interfaces.AppContainer
 
 class RickAndMortyPlatziApp: Application() {
 
-    val appContainer = AppContainer()
+    val appContainer = AppContainerImpl()
 
     //region Override Methods & Callbacks
 

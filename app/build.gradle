@@ -17,7 +17,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "TAG", "\"LOL\""
+        }
         release {
+            buildConfigField "String", "TAG", "\"\""
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

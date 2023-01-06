@@ -102,7 +102,7 @@ class CharacterDetailViewModel(
         disposable.add(
             Observable.fromIterable(episodeUrlList)
                 .flatMap { episode: String ->
-                    episodeRequest.baseUrl = episode
+//                    episodeRequest.baseUrl = episode
                     episodeRequest
                         .getService<EpisodeService>()
                         .getEpisode()

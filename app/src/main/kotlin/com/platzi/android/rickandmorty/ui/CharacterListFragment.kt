@@ -19,6 +19,8 @@ import com.platzi.android.rickandmorty.api.APIConstants.BASE_API_URL
 import com.platzi.android.rickandmorty.api.CharacterRequest
 import com.platzi.android.rickandmorty.api.CharacterServer
 import com.platzi.android.rickandmorty.databinding.FragmentCharacterListBinding
+import com.platzi.android.rickandmorty.di_test.containers.interfaces.AppContainer
+import com.platzi.android.rickandmorty.di_test.containers.interfaces.CharacterListFlowContainer
 import com.platzi.android.rickandmorty.presentation.CharacterListViewModel
 import com.platzi.android.rickandmorty.presentation.CharacterListViewModel.CharacterListNavigation
 import com.platzi.android.rickandmorty.presentation.CharacterListViewModel.CharacterListNavigation.*
@@ -32,6 +34,7 @@ import kotlinx.android.synthetic.main.fragment_character_list.*
 class CharacterListFragment : Fragment() {
 
     //region Fields
+    private lateinit var appContainer: AppContainer
 
     private lateinit var characterGridAdapter: CharacterGridAdapter
     private lateinit var listener: OnCharacterListFragmentListener
@@ -88,8 +91,10 @@ class CharacterListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val appContainer = (requireActivity().application as RickAndMortyPlatziApp).appContainer
-        characterListViewModel = getViewModel { appContainer.characterListViewModelFactory.create() }
+        appContainer = (requireActivity().application as RickAndMortyPlatziApp).appContainer
+        val flowContainer = appContainer.getCharacterListFlowContainer()
+
+        characterListViewModel = getViewModel { flowContainer.getCharacterListViewModelFactory().create() }
 
         characterGridAdapter = CharacterGridAdapter { character ->
             listener.openCharacterDetail(character)
@@ -111,6 +116,11 @@ class CharacterListFragment : Fragment() {
         characterListViewModel.events.observe(this, Observer(this::validateEvents))
 
         characterListViewModel.onGetAllCharacters()
+    }
+
+    override fun onDestroy() {
+        appContainer.clearCharacterListFlowContainer()
+        super.onDestroy()
     }
 
     //endregion
