@@ -26,6 +26,7 @@ android {
 dependencies {
     //Project
     implementation project(":domain")
+    implementation project(":usecases")
 
     //Kotlin
     implementation kotlinLib

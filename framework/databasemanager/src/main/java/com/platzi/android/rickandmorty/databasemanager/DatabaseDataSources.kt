@@ -1,6 +1,6 @@
 package com.platzi.android.rickandmorty.databasemanager
 
-import com.platzi.android.rickandmorty.data.LocalCharacterDataSource
+import com.platzi.android.rickandmorty.data.datasources.LocalCharacterDataSource
 import com.platzi.android.rickandmorty.domain.Character
 import io.reactivex.Flowable
 import io.reactivex.Maybe

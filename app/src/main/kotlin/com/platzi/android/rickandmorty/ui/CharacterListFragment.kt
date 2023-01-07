@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.platzi.android.rickandmorty.R
 import com.platzi.android.rickandmorty.adapters.CharacterGridAdapter
-import com.platzi.android.rickandmorty.data.CharacterRepository
-import com.platzi.android.rickandmorty.data.LocalCharacterDataSource
-import com.platzi.android.rickandmorty.data.RemoteCharacterDataSource
+import com.platzi.android.rickandmorty.data.repositories.CharacterRepositoryImpl
+import com.platzi.android.rickandmorty.data.datasources.LocalCharacterDataSource
+import com.platzi.android.rickandmorty.data.datasources.RemoteCharacterDataSource
 import com.platzi.android.rickandmorty.databasemanager.CharacterDatabase
 import com.platzi.android.rickandmorty.databasemanager.CharacterRoomDataSource
 import com.platzi.android.rickandmorty.databinding.FragmentCharacterListBinding
@@ -52,8 +52,8 @@ class CharacterListFragment : Fragment() {
         CharacterRetrofitDataSource(characterRequest)
     }
 
-    private val characterRepository: CharacterRepository by lazy {
-        CharacterRepository(remoteCharacterDataSource, localCharacterDataSource)
+    private val characterRepository: CharacterRepositoryImpl by lazy {
+        CharacterRepositoryImpl(remoteCharacterDataSource, localCharacterDataSource)
     }
 
     private val getAllCharactersUseCase: GetAllCharactersUseCase by lazy {

@@ -11,18 +11,3 @@ data class Character(
     val location: Location,
     val episodeList: List<String>
 )
-
-data class Location(
-    val name: String,
-    val url: String
-)
-
-data class Origin(
-    val name: String,
-    val url: String
-)
-
-data class Episode(
-    val id: Int,
-    val name: String
-)

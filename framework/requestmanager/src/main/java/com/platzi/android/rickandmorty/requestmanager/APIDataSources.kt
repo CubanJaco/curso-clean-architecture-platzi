@@ -1,7 +1,7 @@
 package com.platzi.android.rickandmorty.requestmanager
 
-import com.platzi.android.rickandmorty.data.RemoteCharacterDataSource
-import com.platzi.android.rickandmorty.data.RemoteEpisodeDataSource
+import com.platzi.android.rickandmorty.data.datasources.RemoteCharacterDataSource
+import com.platzi.android.rickandmorty.data.datasources.RemoteEpisodeDataSource
 import com.platzi.android.rickandmorty.domain.Character
 import com.platzi.android.rickandmorty.domain.Episode
 import io.reactivex.Observable

@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.platzi.android.rickandmorty.R
 import com.platzi.android.rickandmorty.adapters.FavoriteListAdapter
-import com.platzi.android.rickandmorty.data.CharacterRepository
-import com.platzi.android.rickandmorty.data.LocalCharacterDataSource
-import com.platzi.android.rickandmorty.data.RemoteCharacterDataSource
+import com.platzi.android.rickandmorty.data.repositories.CharacterRepositoryImpl
+import com.platzi.android.rickandmorty.data.datasources.LocalCharacterDataSource
+import com.platzi.android.rickandmorty.data.datasources.RemoteCharacterDataSource
 import com.platzi.android.rickandmorty.databasemanager.CharacterDatabase
 import com.platzi.android.rickandmorty.databasemanager.CharacterRoomDataSource
 import com.platzi.android.rickandmorty.databinding.FragmentFavoriteListBinding
@@ -50,8 +50,8 @@ class FavoriteListFragment : Fragment() {
         CharacterRetrofitDataSource(characterRequest)
     }
 
-    private val characterRepository: CharacterRepository by lazy {
-        CharacterRepository(remoteCharacterDataSource, localCharacterDataSource)
+    private val characterRepository: CharacterRepositoryImpl by lazy {
+        CharacterRepositoryImpl(remoteCharacterDataSource, localCharacterDataSource)
     }
 
     private val getAllFavoriteCharactersUseCase: GetAllFavoriteCharactersUseCase by lazy {
