@@ -1,6 +1,9 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.android.extensions'
+    id 'org.jetbrains.kotlin.kapt'
+}
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -37,4 +40,13 @@ dependencies {
     implementation okHttpInterceptorLib
     implementation retrofitRxJavaLib
     implementation retrofitGsonLib
+
+    //hilt
+    implementation hiltLib
+    kapt hiltCompiler
+
+}
+
+kapt {
+    correctErrorTypes true
 }

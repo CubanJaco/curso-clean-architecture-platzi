@@ -1,9 +1,12 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.android.extensions'
+    id 'org.jetbrains.kotlin.kapt'
+}
 
 android {
+    namespace 'com.platzi.android.rickandmorty'
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
@@ -22,13 +25,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    dataBinding {
-        enabled true
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding true
     }
 
     sourceSets {
@@ -37,11 +42,6 @@ android {
         test.java.srcDirs += 'src/test/java'
         test.java.srcDirs += 'src/test/kotlin'
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    namespace 'com.platzi.android.rickandmorty'
 }
 
 androidExtensions {
@@ -80,4 +80,13 @@ dependencies {
     implementation recyclerViewLib
     implementation swipeRefreshLayoutLib
     implementation viewPagerLib
+
+    //hilt
+    implementation hiltLib
+    kapt hiltCompiler
+
+}
+
+kapt {
+    correctErrorTypes true
 }
