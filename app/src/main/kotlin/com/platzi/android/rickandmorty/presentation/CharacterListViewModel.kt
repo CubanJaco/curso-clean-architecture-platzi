@@ -7,9 +7,12 @@ import com.platzi.android.rickandmorty.domain.Character
 import com.platzi.android.rickandmorty.presentation.CharacterListViewModel.CharacterListNavigation.*
 import com.platzi.android.rickandmorty.presentation.utils.Event
 import com.platzi.android.rickandmorty.usecases.GetAllCharactersUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
-class CharacterListViewModel(
+@HiltViewModel
+class CharacterListViewModel @Inject constructor(
     private val getAllCharactersUseCase: GetAllCharactersUseCase
 ): ViewModel() {
 

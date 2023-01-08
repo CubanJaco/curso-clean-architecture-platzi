@@ -6,8 +6,9 @@ import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class CharacterRoomDataSource(
+class CharacterRoomDataSource @Inject constructor(
     database: CharacterDatabase
 ): LocalCharacterDataSource {
 

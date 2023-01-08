@@ -11,9 +11,11 @@ import com.platzi.android.rickandmorty.domain.Character
 import com.platzi.android.rickandmorty.parcelables.toCharacterParcelable
 import com.platzi.android.rickandmorty.utils.Constants
 import com.platzi.android.rickandmorty.utils.startActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     CharacterListFragment.OnCharacterListFragmentListener,
     FavoriteListFragment.OnFavoriteListFragmentListener {

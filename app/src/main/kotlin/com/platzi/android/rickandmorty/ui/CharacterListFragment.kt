@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,9 +31,12 @@ import com.platzi.android.rickandmorty.usecases.GetAllCharactersUseCase
 import com.platzi.android.rickandmorty.utils.getViewModel
 import com.platzi.android.rickandmorty.utils.setItemDecorationSpacing
 import com.platzi.android.rickandmorty.utils.showLongToast
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_character_list.*
 
 
+@AndroidEntryPoint
 class CharacterListFragment : Fragment() {
 
     //region Fields
@@ -40,29 +44,7 @@ class CharacterListFragment : Fragment() {
     private lateinit var characterGridAdapter: CharacterGridAdapter
     private lateinit var listener: OnCharacterListFragmentListener
 
-    private val characterRequest: CharacterRequest by lazy {
-        CharacterRequest(BASE_API_URL)
-    }
-
-    private val localCharacterDataSource: LocalCharacterDataSource by lazy {
-        CharacterRoomDataSource(CharacterDatabase.getDatabase(activity!!.applicationContext))
-    }
-
-    private val remoteCharacterDataSource: RemoteCharacterDataSource by lazy {
-        CharacterRetrofitDataSource(characterRequest)
-    }
-
-    private val characterRepository: CharacterRepositoryImpl by lazy {
-        CharacterRepositoryImpl(remoteCharacterDataSource, localCharacterDataSource)
-    }
-
-    private val getAllCharactersUseCase: GetAllCharactersUseCase by lazy {
-        GetAllCharactersUseCase(characterRepository)
-    }
-
-    private val characterListViewModel: CharacterListViewModel by lazy {
-        getViewModel { CharacterListViewModel(getAllCharactersUseCase) }
-    }
+    private val characterListViewModel: CharacterListViewModel by viewModels()
 
     private val onScrollListener: RecyclerView.OnScrollListener by lazy {
         object: RecyclerView.OnScrollListener() {
@@ -127,7 +109,7 @@ class CharacterListFragment : Fragment() {
             characterListViewModel.onRetryGetAllCharacter(rvCharacterList.adapter?.itemCount ?: 0)
         }
 
-        characterListViewModel.events.observe(this, Observer(this::validateEvents))
+        characterListViewModel.events.observe(viewLifecycleOwner, Observer(this::validateEvents))
 
         characterListViewModel.onGetAllCharacters()
     }

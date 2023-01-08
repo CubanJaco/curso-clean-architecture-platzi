@@ -7,8 +7,9 @@ import com.platzi.android.rickandmorty.usecases.repositories.CharacterRepository
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
+import javax.inject.Inject
 
-class CharacterRepositoryImpl(
+class CharacterRepositoryImpl @Inject constructor(
     private val remoteCharacterDataSource: RemoteCharacterDataSource,
     private val localCharacterDataSource: LocalCharacterDataSource
 ): CharacterRepository {

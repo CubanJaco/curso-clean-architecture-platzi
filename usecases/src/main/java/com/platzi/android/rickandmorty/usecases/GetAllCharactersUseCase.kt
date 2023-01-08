@@ -3,8 +3,9 @@ package com.platzi.android.rickandmorty.usecases
 import com.platzi.android.rickandmorty.domain.Character
 import com.platzi.android.rickandmorty.usecases.repositories.CharacterRepository
 import io.reactivex.Single
+import javax.inject.Inject
 
-class GetAllCharactersUseCase(
+class GetAllCharactersUseCase @Inject constructor(
     private val characterRepository: CharacterRepository
 ) {
 
