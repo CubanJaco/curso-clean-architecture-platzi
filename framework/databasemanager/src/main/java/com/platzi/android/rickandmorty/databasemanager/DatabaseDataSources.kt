@@ -2,12 +2,14 @@ package com.platzi.android.rickandmorty.databasemanager
 
 import com.platzi.android.rickandmorty.data.datasources.LocalCharacterDataSource
 import com.platzi.android.rickandmorty.domain.Character
+import dagger.hilt.android.scopes.ViewModelScoped
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
+@ViewModelScoped
 class CharacterRoomDataSource @Inject constructor(
     database: CharacterDatabase
 ): LocalCharacterDataSource {

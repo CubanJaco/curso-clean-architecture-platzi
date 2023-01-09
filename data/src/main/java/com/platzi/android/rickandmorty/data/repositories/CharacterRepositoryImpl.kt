@@ -4,11 +4,13 @@ import com.platzi.android.rickandmorty.data.datasources.LocalCharacterDataSource
 import com.platzi.android.rickandmorty.data.datasources.RemoteCharacterDataSource
 import com.platzi.android.rickandmorty.domain.Character
 import com.platzi.android.rickandmorty.usecases.repositories.CharacterRepository
+import dagger.hilt.android.scopes.ViewModelScoped
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
 import javax.inject.Inject
 
+@ViewModelScoped
 class CharacterRepositoryImpl @Inject constructor(
     private val remoteCharacterDataSource: RemoteCharacterDataSource,
     private val localCharacterDataSource: LocalCharacterDataSource

@@ -1,6 +1,7 @@
 package com.platzi.android.rickandmorty.requestmanager
 
 import com.platzi.android.rickandmorty.requestmanager.di.BaseUrlQualifier
+import dagger.hilt.android.scopes.ViewModelScoped
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -30,8 +31,12 @@ abstract class BaseRequest<T: Any>(
         .build()
 }
 
+@ViewModelScoped
 class CharacterRequest @Inject constructor(
     @BaseUrlQualifier baseUrl: String
 ): BaseRequest<CharacterService>(baseUrl)
 
-class EpisodeRequest(baseUrl: String): BaseRequest<EpisodeService>(baseUrl)
+@ViewModelScoped
+class EpisodeRequest @Inject constructor(
+    @BaseUrlQualifier baseUrl: String
+): BaseRequest<EpisodeService>(baseUrl)
