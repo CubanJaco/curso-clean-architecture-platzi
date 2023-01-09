@@ -9,11 +9,14 @@ import com.platzi.android.rickandmorty.presentation.FavoriteListViewModel.Favori
 import com.platzi.android.rickandmorty.presentation.FavoriteListViewModel.FavoriteListNavigation.ShowEmptyListMessage
 import com.platzi.android.rickandmorty.presentation.utils.Event
 import com.platzi.android.rickandmorty.usecases.GetAllFavoriteCharactersUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
-class FavoriteListViewModel (
+@HiltViewModel
+class FavoriteListViewModel @Inject constructor(
     private val getAllFavoriteCharactersUseCase: GetAllFavoriteCharactersUseCase
-) : ViewModel(){
+) : ViewModel() {
 
     //region Fields
 

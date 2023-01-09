@@ -8,14 +8,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.platzi.android.rickandmorty.R
 import com.platzi.android.rickandmorty.adapters.FavoriteListAdapter
-import com.platzi.android.rickandmorty.data.repositories.CharacterRepositoryImpl
-import com.platzi.android.rickandmorty.data.datasources.LocalCharacterDataSource
-import com.platzi.android.rickandmorty.data.datasources.RemoteCharacterDataSource
-import com.platzi.android.rickandmorty.databasemanager.CharacterDatabase
-import com.platzi.android.rickandmorty.databasemanager.CharacterRoomDataSource
 import com.platzi.android.rickandmorty.databinding.FragmentFavoriteListBinding
 import com.platzi.android.rickandmorty.domain.Character
 import com.platzi.android.rickandmorty.presentation.FavoriteListViewModel
@@ -23,14 +19,11 @@ import com.platzi.android.rickandmorty.presentation.FavoriteListViewModel.Favori
 import com.platzi.android.rickandmorty.presentation.FavoriteListViewModel.FavoriteListNavigation.ShowCharacterList
 import com.platzi.android.rickandmorty.presentation.FavoriteListViewModel.FavoriteListNavigation.ShowEmptyListMessage
 import com.platzi.android.rickandmorty.presentation.utils.Event
-import com.platzi.android.rickandmorty.requestmanager.APIConstants.BASE_API_URL
-import com.platzi.android.rickandmorty.requestmanager.CharacterRequest
-import com.platzi.android.rickandmorty.requestmanager.CharacterRetrofitDataSource
-import com.platzi.android.rickandmorty.usecases.GetAllFavoriteCharactersUseCase
-import com.platzi.android.rickandmorty.utils.getViewModel
 import com.platzi.android.rickandmorty.utils.setItemDecorationSpacing
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_favorite_list.*
 
+@AndroidEntryPoint
 class FavoriteListFragment : Fragment() {
 
     //region Fields
@@ -38,29 +31,7 @@ class FavoriteListFragment : Fragment() {
     private lateinit var favoriteListAdapter: FavoriteListAdapter
     private lateinit var listener: OnFavoriteListFragmentListener
 
-    private val characterRequest: CharacterRequest by lazy {
-        CharacterRequest(BASE_API_URL)
-    }
-
-    private val localCharacterDataSource: LocalCharacterDataSource by lazy {
-        CharacterRoomDataSource(CharacterDatabase.getDatabase(activity!!.applicationContext))
-    }
-
-    private val remoteCharacterDataSource: RemoteCharacterDataSource by lazy {
-        CharacterRetrofitDataSource(characterRequest)
-    }
-
-    private val characterRepository: CharacterRepositoryImpl by lazy {
-        CharacterRepositoryImpl(remoteCharacterDataSource, localCharacterDataSource)
-    }
-
-    private val getAllFavoriteCharactersUseCase: GetAllFavoriteCharactersUseCase by lazy {
-        GetAllFavoriteCharactersUseCase(characterRepository)
-    }
-
-    private val favoriteListViewModel: FavoriteListViewModel by lazy {
-        getViewModel { FavoriteListViewModel(getAllFavoriteCharactersUseCase) }
-    }
+    private val favoriteListViewModel: FavoriteListViewModel by viewModels()
 
     //endregion
 
@@ -103,8 +74,8 @@ class FavoriteListFragment : Fragment() {
             adapter = favoriteListAdapter
         }
 
-        favoriteListViewModel.favoriteCharacterList.observe(this, Observer(favoriteListViewModel::onFavoriteCharacterList))
-        favoriteListViewModel.events.observe(this, Observer(this::validateEvents))
+        favoriteListViewModel.favoriteCharacterList.observe(viewLifecycleOwner, Observer(favoriteListViewModel::onFavoriteCharacterList))
+        favoriteListViewModel.events.observe(viewLifecycleOwner, Observer(this::validateEvents))
     }
 
     //endregion
