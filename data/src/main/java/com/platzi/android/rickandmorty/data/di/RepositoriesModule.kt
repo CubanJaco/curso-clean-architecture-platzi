@@ -1,7 +1,9 @@
 package com.platzi.android.rickandmorty.data.di
 
 import com.platzi.android.rickandmorty.data.repositories.CharacterRepositoryImpl
+import com.platzi.android.rickandmorty.data.repositories.EpisodeRepositoryImpl
 import com.platzi.android.rickandmorty.usecases.repositories.CharacterRepository
+import com.platzi.android.rickandmorty.usecases.repositories.EpisodeRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,5 +17,10 @@ interface RepositoriesModule {
     fun bindCharacterRepository(
         characterRepositoryImpl: CharacterRepositoryImpl
     ): CharacterRepository
+
+    @Binds
+    fun bindEpisodeRepository(
+        episodeRepositoryImpl: EpisodeRepositoryImpl
+    ): EpisodeRepository
 
 }

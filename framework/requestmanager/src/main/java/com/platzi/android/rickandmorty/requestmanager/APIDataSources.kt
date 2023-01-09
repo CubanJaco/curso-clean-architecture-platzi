@@ -26,7 +26,8 @@ class CharacterRetrofitDataSource @Inject constructor(
     }
 }
 
-class EpisodeRetrofitDataSource(
+@ViewModelScoped
+class EpisodeRetrofitDataSource @Inject constructor(
     private val episodeRequest: EpisodeRequest
 ) : RemoteEpisodeDataSource {
 

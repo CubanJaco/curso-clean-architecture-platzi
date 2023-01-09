@@ -3,11 +3,14 @@ package com.platzi.android.rickandmorty.data.repositories
 import com.platzi.android.rickandmorty.data.datasources.RemoteEpisodeDataSource
 import com.platzi.android.rickandmorty.domain.Episode
 import com.platzi.android.rickandmorty.usecases.repositories.EpisodeRepository
+import dagger.hilt.android.scopes.ViewModelScoped
 import io.reactivex.Single
+import javax.inject.Inject
 
-class EpisodeRepositoryImpl(
+@ViewModelScoped
+class EpisodeRepositoryImpl @Inject constructor(
     private val remoteEpisodeDataSource: RemoteEpisodeDataSource
-): EpisodeRepository {
+) : EpisodeRepository {
 
     //region Public Methods
 

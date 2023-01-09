@@ -10,18 +10,33 @@ import com.platzi.android.rickandmorty.presentation.utils.Event
 import com.platzi.android.rickandmorty.usecases.GetEpisodeFromCharacterUseCase
 import com.platzi.android.rickandmorty.usecases.GetFavoriteCharacterStatusUseCase
 import com.platzi.android.rickandmorty.usecases.UpdateFavoriteCharacterStatusUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class CharacterDetailViewModel(
-    private val character: Character? = null,
+@HiltViewModel
+class CharacterDetailViewModel @Inject constructor(
     private val getEpisodeFromCharacterUseCase: GetEpisodeFromCharacterUseCase,
     private val getFavoriteCharacterStatusUseCase: GetFavoriteCharacterStatusUseCase,
     private val updateFavoriteCharacterStatusUseCase: UpdateFavoriteCharacterStatusUseCase
 ) : ViewModel() {
 
     //region Fields
+    private lateinit var _character: Character
+    var character: Character? = null
+        set(value) {
+
+            if (::_character.isInitialized)
+                throw IllegalStateException("character has been set before")
+
+            if (value == null)
+                throw IllegalStateException("character can't be null")
+
+            value.apply { _character = this }
+            field = value
+        }
 
     private val disposable = CompositeDisposable()
 
@@ -48,21 +63,22 @@ class CharacterDetailViewModel(
     //region Public Methods
 
     fun onCharacterValidation() {
-        if (character == null) {
+
+        if (!::_character.isInitialized) {
             _events.value = Event(CloseActivity)
             return
         }
 
-        _characterValues.value = character
+        _characterValues.value = _character
 
-        validateFavoriteCharacterStatus(character.id)
-        requestShowEpisodeList(character.episodeList)
+        validateFavoriteCharacterStatus(_character.id)
+        requestShowEpisodeList(_character.episodeList)
     }
 
     fun onUpdateFavoriteCharacterStatus() {
         disposable.add(
             updateFavoriteCharacterStatusUseCase
-                .invoke(character!!)
+                .invoke(_character)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe { isFavorite ->
@@ -75,7 +91,7 @@ class CharacterDetailViewModel(
 
     //region Private Methods
 
-    private fun validateFavoriteCharacterStatus(characterId: Int){
+    private fun validateFavoriteCharacterStatus(characterId: Int) {
         disposable.add(
             getFavoriteCharacterStatusUseCase
                 .invoke(characterId)
@@ -85,7 +101,7 @@ class CharacterDetailViewModel(
         )
     }
 
-    private fun requestShowEpisodeList(episodeUrlList: List<String>){
+    private fun requestShowEpisodeList(episodeUrlList: List<String>) {
         disposable.add(
             getEpisodeFromCharacterUseCase
                 .invoke(episodeUrlList)
