@@ -1,18 +1,19 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.android.extensions'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
 }
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
+    namespace 'com.platzi.android.rickandmorty.usecases'
+    compileSdk 32
 
     defaultConfig {
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        minSdk 21
+        targetSdk 32
 
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -22,7 +23,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.platzi.android.rickandmorty.usecases'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
@@ -30,15 +37,14 @@ dependencies {
     implementation project(":domain")
 
     //Kotlin
-    implementation kotlinLib
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //RxJava
-    implementation rxJavaLib
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
 
-    //hilt
-    implementation hiltLib
-    kapt hiltCompiler
-
+    //Hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 }
 
 kapt {

@@ -1,8 +1,22 @@
-include ':framework:requestmanager'
-include ':framework:databasemanager'
-include ':framework:imagemanager'
-include ':usecases'
-include ':data'
-include ':domain'
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
 rootProject.name='RickAndMortyPlatzi'
 include ':app'
+include ':domain'
+include ':usecases'
+include ':data'
+include ':framework:databasemanager'
+include ':framework:imagemanager'
+include ':framework:requestmanager'

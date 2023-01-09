@@ -5,12 +5,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
+    namespace 'com.platzi.android.rickandmorty.imagemanager'
+    compileSdk 32
 
     defaultConfig {
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        minSdk 21
+        targetSdk 32
 
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -20,14 +22,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.platzi.android.rickandmorty.imagemanager'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
     //Kotlin
-    implementation kotlinLib
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //Glide
-    implementation glideLib
-    annotationProcessor glideCompiler
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
 }
