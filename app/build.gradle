@@ -42,8 +42,8 @@ dependencies {
 
     //KTX
     implementation "androidx.core:core-ktx:$coreKTXVersion"
-    implementation "androidx.activity:activity-ktx:1.5.1"
-    implementation "androidx.fragment:fragment-ktx:1.5.1"
+    implementation "androidx.activity:activity-ktx:$activityKTXVersion"
+    implementation "androidx.fragment:fragment-ktx:$fragmentKTXVersion"
 
     //Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
